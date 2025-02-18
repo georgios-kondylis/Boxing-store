@@ -37,18 +37,20 @@ const createBoxingGloves = async () => {
   };
   // createBoxingGloves();
 
-  const updateGlove = async (brand, weight, newPrice) => {
+  const updateGlove = async (brand, weight, img) => {
     try {
       const updatedGlove = await boxingGloveModel.findOneAndUpdate(  
-        { brand: brand, weight: weight },  // Find by brand & weight, first field is the criteria to find nd the second to update
-        { price: newPrice },               // Update price, second object field are the update, 1 or more
+        { brand: brand, weight: weight},  // Find by brand & weight, first field is the criteria to find nd the second to update
+        { img: img },               // Update price, second object field are the update, 1 or more
         { new: true }                      // Return the updated document
       )
     } catch (error) {
       console.error("Error updating glove:", error);
     }
   }
-  // updateGlove('Everlast', '16', 90);
+
+   updateGlove('Raja', 16, 'https://i.ibb.co/Wvc6S06z/rajaBlue.png');
+
 
 
 //------------ Start the Server -------------

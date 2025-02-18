@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
-const transition = 'transition-all ease-in-out duration-300';
-
 const Navbar = ({cartIsOpen, setCartIsOpen}) => {
+  const transition = 'transition-all ease-in-out duration-300';
+  const [cartItems, setCartItems] = useState([]);
+  const [cartLength, setCartLength] = useState(0);
   
-  const [cartItems, setCartItems] = useState([]); // Array to store the cart items i will fetch from my mongoDB
 
   useEffect(() => {
     const fetchCartData = async () => {
@@ -19,12 +19,23 @@ const Navbar = ({cartIsOpen, setCartIsOpen}) => {
       }
     }
     fetchCartData();
-  },[])
+  },[cartItems])
 
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`http://localhost:5000/add-to-cart/${id}`, {method: 'DELETE'})
+      setCartItems((prevItems) => prevItems.filter((item) => item._id !== id))
+    } catch (err) {
+      console.error('Error deleting item:', err);
+    }
+  }
+
+  // Calculate total amount
+  const totalAmount = cartItems.reduce((total, item) => total + item.price, 0); 
 
   return (
     <>
-      <div id='navbar-container' className='text-white w-full bg-[#1a1a1a] border-b flex justify-center'>
+      <div id={`navbar-container' className='text-white w-full bg-[#1a1a1a] border-b flex justify-center`}>
 
         <div id='navbar' className='relative w-full items-center flex justify-around h-[70px]'>
           <div id='logo' className='flex items-center gap-[0px]'>
@@ -40,45 +51,50 @@ const Navbar = ({cartIsOpen, setCartIsOpen}) => {
             <NavLink to='/shoes' className='hover:text-gray-300'>Shoes</NavLink>
           </div>
 
-          <div id='cart' className='cursor-pointer flex items-center gap-2' onClick={() => setCartIsOpen(true)}>
+          <div id='cart' className='relevant cursor-pointer flex items-center gap-2' onClick={() => setCartIsOpen(true)}>
             <i className="fa-solid fa-cart-shopping"></i>
+            <div className='absolute w-[20px] h-[20px] rounded-full bg-[red]'></div>
           </div>
 
           {/* Side Cart Panel */}
-          <div id='sidenav' className={`z-50 absolute bg-[#2e2e2e] top-0 h-[100vh] w-[400px] ${cartIsOpen ? 'right-0' : 'right-[-500px]'} ${transition}`}>
+          <div id='sidenav' className={`z-50 fixed bg-[#2e2e2e] top-0 overflow-y-auto h-full w-[400px] ${cartIsOpen ? 'right-0' : 'right-[-500px]'} transition-all ease-in-out duration-300`}>
             <div className='border-b w-full h-[70px] flex justify-around items-center'>
               <button className=' text-xl' onClick={() => setCartIsOpen(false)}>X</button>
-              <i className="fa-solid fa-cart-shopping"></i>
+               <i className="fa-solid fa-cart-shopping"></i>
             </div>
 
-            <div className='mt-[10px] flex flex-col gap-[10px]'>
-              {cartItems.map((item) => (
-                <div className='flex justify-between px-[10px]'>
-                  <div key={item._id} className=' flex items-center justify-start gap-[10px]'> 
-                  <img className='rounded-full object-contain w-[70px] h-[70px]' 
-                      src={item.img[0]} 
-                        alt={'No image'} />
-                    <p key={item.id}>{item.brand}
-                    </p>
-                  </div>
+            <div className='flex flex-col justify-between h-[85vh]'>
 
-                  <div className='flex gap-[10px] items-center  text-white'>
-                    <button className='rounded-full hover:scale-[1.2] transition-all duration-300 ease-in-out text-[1.5rem]'>
-                      <i className="fa-solid fa-circle-minus"></i>
-                    </button>
+              <div id='cart-items-container' className='mt-[10px] pb-[60px] flex flex-col gap-[10px] px-4'>
+                {cartItems.length > 0 ?
+                cartItems.map((item) => (
+                  <div key={item._id} className='flex justify-between items-center p-2 border-b'>
+                    <div className='flex items-center gap-4'>
+                      <img src={item.img[0]} className='object-contain w-[70px] h-[70px]' alt='No image' />
+                      <div className='flex flex-col'>
+                        <p>{item.brand}</p>
+                        <p>{item.price} €</p>
+                      </div>
+                    </div>
 
-                    <p>5</p>
-
-                    <button className='rounded-full hover:scale-[1.2] transition-all duration-300 ease-in-out text-[1.5rem]'>
-                      <i className="fa-solid fa-circle-plus"></i>
+                    <button className='rounded-full hover:scale-110 hover:text-[#eb5656e6] transition-all duration-300 ease-in-out text-xl'
+                            onClick={() => handleDelete(item._id)}>
+                      <i className="fa-solid fa-trash-can"></i>
                     </button>
                   </div>
-                  <button className='rounded-full  hover:scale-[1.2] hover:text-[#eb5656e6] transition-all duration-300 ease-in-out text-[1.5rem]'>
-                    <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                </div>
-               ))}
+                ))
+                
+                : <p className='mx-auto'>Your Cart is empty</p>}
+                
+              </div>
+
+              {/* Total Amount Section */}
+              <div className="z-10 fixed bottom-0 bg-mainBg w-full p-4 border-t flex justify-between text-lg">
+                <p>Total Amount: {totalAmount.toFixed(2)} €</p>
+              </div>
+
             </div>
+
           </div>
         </div>
 

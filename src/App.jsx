@@ -30,3 +30,5 @@ function App() {
 }
 
 export default App;
+
+//  https://g-kondylis.imgbb.com/   Is the image cloud im using for the mongoDB pictures
