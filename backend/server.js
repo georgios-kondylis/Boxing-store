@@ -1,49 +1,47 @@
-import 'dotenv/config';
-import express from 'express';
-import { MongoClient } from 'mongodb';
-import cors from 'cors';
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import { boxerModel } from "./Boxer.js";
+import { boxingShoeModel, boxingGloveModel } from "./Boxing_gear.js";
+import { Cart } from "./Cart.js";
 
-//------------ Connect to MongoDB -------------
-const mongodb_uri = process.env.MONGO_URI;
-const client = new MongoClient(mongodb_uri);
-let db;  // create a global variable to Store the database instance
+// Routes
+import boxerRoutes from "./routes/boxerRoutes.js";  // Import the boxerRoutes
+import boxingShoesRoute from "./routes/BoxingShoesRoutes.js"; // import the routes to render boxing shoes
+import boxingGlovesRoutes from "./routes/BoxingGlovesRoutes.js"; 
+import cartRoutes from "./routes/cartRoutes.js"; 
 
-const connectToMongoDB = async () => {
-  try {
-    await client.connect();
-    console.log("✅ Connected to MongoDB!");
-    db = client.db('Boxing-Hall-of-Fame'); // Database Name
-  } catch (err) {
-    console.error('❌ malakia', err);
-    process.exit(1);
-  }
-};
-//------------ Connect to MongoDB -------------
 
 const PORT = process.env.PORT || 5000;
+
 const app = express();
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));  // Increase the limit for the body parser middleware
 app.use(cors());
 
-//------------ Create an Endpoint to GET the boxers -------------
-app.get('/api/boxers', async (req, res) => {
-  try {
-    if (!db) {
-      return res.status(500).json({ error: "Database not connected" });
+app.use('/boxers', boxerRoutes);
+app.use('/boxing_shoes', boxingShoesRoute);
+app.use('/boxing_gloves', boxingGlovesRoutes);  // http://localhost:5000/boxing_gloves
+app.use('/add-to-cart', cartRoutes);            // http://localhost:5000/add-to-cart
+
+const createBoxingGloves = async () => { 
+    try {
+      const gloves = [
+        { brand: "Raja", weight: 10, price: 140, img: ['https://i.ibb.co/2YNQSLp3/raja-Black.png'] },
+        { brand: "Raja", weight: 14, price: 140, img: ['https://i.ibb.co/N2065rX7/rajaRed.jpg'] },
+      ];
+      
+      const result = await boxingGloveModel.insertMany(gloves); // Mongoose handles creating the model instances, no need to type new boxingGloveModel() before each new model
+      console.log(` ${result.length} new Gloves added:`, result);
+    } catch (error) {
+      console.log("Error adding boxing glove:", error);
     }
-    const boxers = await db.collection('boxers').find().toArray();
-    res.json(boxers);
-  } catch (err) {
-    console.error('Error fetching boxers:', err);
-    res.status(500).json({ error: 'Could not fetch boxers' });
-  }
-});
+  };
+  // createBoxingGloves();
 
 //------------ Start the Server -------------
 const startServer = async () => {
-  await connectToMongoDB(); // Connect ONCE
-  app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+  app.listen(PORT, () =>
+    console.log(`🚀 Server running on port ${PORT} eimai gamatos`)
+  );
 };
 startServer();
-
-

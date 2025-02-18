@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  overflow-x: hidden;
+  margin: 0; /* Optional: Removes default margin */
+  padding: 0; /* Optional: Removes default padding */
+}
+
+/* h1 {
+  background-color: #faebd7;
+} */
