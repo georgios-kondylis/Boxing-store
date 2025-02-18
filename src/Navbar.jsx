@@ -13,6 +13,7 @@ const Navbar = ({cartIsOpen, setCartIsOpen}) => {
         const res = await fetch('http://localhost:5000/add-to-cart')
         const cardDataInJson = await res.json();
         setCartItems(cardDataInJson);
+        setCartLength(cardDataInJson.length);
         console.log(cardDataInJson)
       } catch (err) {
         console.log(`olo malakies : ${err}`)
@@ -35,7 +36,7 @@ const Navbar = ({cartIsOpen, setCartIsOpen}) => {
 
   return (
     <>
-      <div id={`navbar-container' className='text-white w-full bg-[#1a1a1a] border-b flex justify-center`}>
+      <div id='navbar-container' className='text-white w-full bg-[#292929] border-b flex justify-center'>
 
         <div id='navbar' className='relative w-full items-center flex justify-around h-[70px]'>
           <div id='logo' className='flex items-center gap-[0px]'>
@@ -51,16 +52,19 @@ const Navbar = ({cartIsOpen, setCartIsOpen}) => {
             <NavLink to='/shoes' className='hover:text-gray-300'>Shoes</NavLink>
           </div>
 
-          <div id='cart' className='relevant cursor-pointer flex items-center gap-2' onClick={() => setCartIsOpen(true)}>
-            <i className="fa-solid fa-cart-shopping"></i>
-            <div className='absolute w-[20px] h-[20px] rounded-full bg-[red]'></div>
+          <div id='cart' className='relative cursor-pointer flex items-center gap-2' onClick={() => setCartIsOpen(true)}>
+            <i className="text-[1.4rem] fa-solid fa-cart-shopping"></i>
+            <div className={`absolute ${cartLength < 1 ? 'hidden' : ''} top-[-10px] right-[-10px] w-[15px] h-[15px] flex items-center justify-center rounded-full bg-[#dc3030]`}>
+              <p className='text-[13px]'>{cartLength}</p>
+            </div>
           </div>
 
           {/* Side Cart Panel */}
           <div id='sidenav' className={`z-50 fixed bg-[#2e2e2e] top-0 overflow-y-auto h-full w-[400px] ${cartIsOpen ? 'right-0' : 'right-[-500px]'} transition-all ease-in-out duration-300`}>
-            <div className='border-b w-full h-[70px] flex justify-around items-center'>
-              <button className=' text-xl' onClick={() => setCartIsOpen(false)}>X</button>
-               <i className="fa-solid fa-cart-shopping"></i>
+            <div className='border-b w-full h-[70px] flex justify-start items-center'>
+              <button className='text-[1.5rem] ml-[20px]' onClick={() => setCartIsOpen(false)}>
+                <i className="fa-solid fa-right-from-bracket"></i>
+              </button>
             </div>
 
             <div className='flex flex-col justify-between h-[85vh]'>
@@ -77,7 +81,7 @@ const Navbar = ({cartIsOpen, setCartIsOpen}) => {
                       </div>
                     </div>
 
-                    <button className='rounded-full hover:scale-110 hover:text-[#eb5656e6] transition-all duration-300 ease-in-out text-xl'
+                    <button className={`rounded-full hover:scale-110 hover:text-[#eb5656e6] ${transition} text-xl`}
                             onClick={() => handleDelete(item._id)}>
                       <i className="fa-solid fa-trash-can"></i>
                     </button>

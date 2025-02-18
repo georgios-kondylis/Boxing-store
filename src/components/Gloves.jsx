@@ -4,7 +4,8 @@ import Skeleton from '@mui/material/Skeleton';
 const Gloves = () => {
   const [gloves, setGloves] = useState([]);  
   const [loading, setLoading] = useState(true);
-  const [hoveredGloves, setHoveredGloves] = useState({}); 
+  const [hoveredGloves, setHoveredGloves] = useState({});
+  const [justAdded, setJustAdded] = useState(false);
 
   useEffect(() => {
     const fetchGloves = async () => {
@@ -62,9 +63,9 @@ const Gloves = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {loading ? (              //  Skeleton loader
           Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="bg-white flex flex-col justify-between border h-[450px] px-[20px] py-[10px] rounded-lg shadow-md">
+            <div key={i} className="bg-white flex flex-col justify-between border h-[400px] px-[20px] py-[10px] rounded-lg shadow-md">
               <Skeleton variant="text" width={130} height={40} sx={{marginLeft: 'auto', marginRight: 'auto'}} />
-              <Skeleton variant="rectangular" width="100%" height={280} />
+              <Skeleton variant="rectangular" width="100%" height={250} />
               <div>    
                 <Skeleton variant="text" width={100} />
                 <Skeleton variant="text" width={80} />
@@ -92,11 +93,20 @@ const Gloves = () => {
                 <div className="hover:shadow-[2px_2px_10px_rgba(0,0,0,0.5)] relative flex items-center justify-center cursor-pointer rounded-full p-[8px] hover:scale-[1.2] transition-all duration-300"
                   onMouseEnter={() => handleMouseEnter(glove._id)}
                   onMouseLeave={() => handleMouseLeave(glove._id)}
-                  onClick={() => handleAddToCart(glove)}
+                  onClick={() => {
+                    handleAddToCart(glove);
+                    setJustAdded(true);  // Set true when item is added to cart
+                    setTimeout(() => {
+                      setJustAdded(false); // Set false after 2 seconds
+                    }, 700); 
+                  }}
                 >
                   <i className="text-[1.3rem] fa-solid fa-cart-shopping"></i>
                   <p className={`absolute text-[0.8rem] ${!hoveredGloves[glove._id] ? "opacity-0 pointer-events-none left-0" : "left-[-70px]"} text-nowrap transition-all duration-300`}>
-                    Add to cart
+                   { justAdded ? 
+                    <div className="flex items-center gap-[5px]">
+                      <i className="text-[#32e632] text-[1.3rem] fa-solid fa-circle-check"></i>  Added
+                    </div> : 'Add to Cart' }
                   </p>
                 </div>
               </div>
