@@ -29,7 +29,6 @@ const createBoxingGloves = async () => {
         { brand: "Raja", weight: 10, price: 140, img: ['https://i.ibb.co/2YNQSLp3/raja-Black.png'] },
         { brand: "Raja", weight: 14, price: 140, img: ['https://i.ibb.co/N2065rX7/rajaRed.jpg'] },
       ];
-      
       const result = await boxingGloveModel.insertMany(gloves); // Mongoose handles creating the model instances, no need to type new boxingGloveModel() before each new model
       console.log(` ${result.length} new Gloves added:`, result);
     } catch (error) {
@@ -37,6 +36,20 @@ const createBoxingGloves = async () => {
     }
   };
   // createBoxingGloves();
+
+  const updateGlove = async (brand, weight, newPrice) => {
+    try {
+      const updatedGlove = await boxingGloveModel.findOneAndUpdate(  
+        { brand: brand, weight: weight },  // Find by brand & weight, first field is the criteria to find nd the second to update
+        { price: newPrice },               // Update price, second object field are the update, 1 or more
+        { new: true }                      // Return the updated document
+      )
+    } catch (error) {
+      console.error("Error updating glove:", error);
+    }
+  }
+  // updateGlove('Everlast', '16', 90);
+
 
 //------------ Start the Server -------------
 const startServer = async () => {
