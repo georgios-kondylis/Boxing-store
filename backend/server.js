@@ -40,18 +40,28 @@ const createBoxingGloves = async () => {
   const updateGlove = async (brand, weight, img) => {
     try {
       const updatedGlove = await boxingGloveModel.findOneAndUpdate(  
-        { brand: brand, weight: weight},  // Find by brand & weight, first field is the criteria to find nd the second to update
-        { img: img },               // Update price, second object field are the update, 1 or more
-        { new: true }                      // Return the updated document
+        { brand: brand, weight: weight}, // Find by brand & weight, first field is the criteria to find nd the second to update
+        { img: img },                    // Update price, second object field are the update, 1 or more
+        { new: true }                    // Return the updated document
       )
     } catch (error) {
       console.error("Error updating glove:", error);
     }
   }
+  //  updateGlove('Raja', 16, 'https://i.ibb.co/Wvc6S06z/rajaBlue.png');
 
-   updateGlove('Raja', 16, 'https://i.ibb.co/Wvc6S06z/rajaBlue.png');
-
-
+  const updateAllGloves = async () => {
+    try {
+      const updatedGloves = await boxingGloveModel.updateMany(
+        {},
+        { $set: {liked: false} }
+      );
+      console.log(`${updatedGloves.nModified} gloves updated to disliked.`);
+    } catch (err) {
+      console.log(`bro Wtf : ${err}`);
+    }
+  };
+  // updateAllGloves();
 
 //------------ Start the Server -------------
 const startServer = async () => {

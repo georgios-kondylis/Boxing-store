@@ -20,7 +20,7 @@ function App() {
         <Routes>
           <Route path="/"/>
           <Route path="/boxers" element={<Boxers/>}/>
-          <Route path="/gloves" element={<Gloves/>}/>
+          <Route path="/gloves" element={<Gloves setCartIsOpen={setCartIsOpen}/>}/>
           <Route path="/mouthpiece" element={<Mouthpiece/>}/>
           <Route path="/wraps" element={<Wraps/>}/>
           <Route path="/shoes" element={<Shoes/>}/>

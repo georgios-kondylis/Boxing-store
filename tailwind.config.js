@@ -7,7 +7,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        mainBg: '#404040'
+        mainBg: '#404040',
+        mainBg2: '#606060',
+        redEasy: '#eb5656e6'
       }
     },
   },

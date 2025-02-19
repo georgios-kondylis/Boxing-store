@@ -47,15 +47,22 @@ const Navbar = ({cartIsOpen, setCartIsOpen}) => {
           <div id='navlinks' className='flex gap-[20px] justify-around'>
             <NavLink to='/boxers' className='hover:text-gray-300'>Boxers</NavLink>
             <NavLink to='/gloves' className='hover:text-gray-300'>Gloves</NavLink>
+            <NavLink to='/gloves' className='hover:text-gray-300'>Head-gear</NavLink>
             <NavLink to='/wraps' className='hover:text-gray-300'>Wraps</NavLink>
             <NavLink to='/mouthpiece' className='hover:text-gray-300'>Mouthpiece</NavLink>
             <NavLink to='/shoes' className='hover:text-gray-300'>Shoes</NavLink>
           </div>
 
-          <div id='cart' className='relative cursor-pointer flex items-center gap-2' onClick={() => setCartIsOpen(true)}>
-            <i className="text-[1.4rem] fa-solid fa-cart-shopping"></i>
-            <div className={`absolute ${cartLength < 1 ? 'hidden' : ''} top-[-10px] right-[-10px] w-[15px] h-[15px] flex items-center justify-center rounded-full bg-[#dc3030]`}>
-              <p className='text-[13px]'>{cartLength}</p>
+          <div id='Cart-&-Heart' className='text-[1.4rem] flex items-center gap-[20px]'>
+            <div className='relative cursor-pointer'  onClick={() => setCartIsOpen(true)}>
+              <i className="text-[1.4rem] fa-solid fa-cart-shopping"></i>
+              <div className={`absolute ${cartLength < 1 ? 'hidden' : ''} top-[-5px] right-[-10px] w-[15px] h-[15px] flex items-center justify-center rounded-full bg-[#dc3030]`}>
+                <p className='text-[13px]'>{cartLength}</p>
+              </div>
+            </div>
+
+            <div>
+               <i class="fa-solid fa-heart-circle-check"></i>
             </div>
           </div>
 
@@ -81,7 +88,7 @@ const Navbar = ({cartIsOpen, setCartIsOpen}) => {
                       </div>
                     </div>
 
-                    <button className={`rounded-full hover:scale-110 hover:text-[#eb5656e6] ${transition} text-xl`}
+                    <button className={`rounded-full hover:scale-110 hover:text-redEasy ${transition} text-xl`}
                             onClick={() => handleDelete(item._id)}>
                       <i className="fa-solid fa-trash-can"></i>
                     </button>

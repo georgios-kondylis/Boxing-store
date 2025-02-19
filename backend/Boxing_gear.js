@@ -15,6 +15,7 @@ const boxingGlovesSchema = new mongoose.Schema({
   weight: Number, 
   price: Number,
   img: [String], // Array of image URLs
+  liked: { type: Boolean, default: false },
 });
 
 // Export both models
