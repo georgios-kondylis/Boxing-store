@@ -15,7 +15,7 @@ const boxingHeadGearSchema = new mongoose.Schema({
 // Schema for Boxing Shoes
 const boxingShoesSchema = new mongoose.Schema({
   brand: String,
-  sizes: {type: [Number], default: [37, 38, 39, 40, 41, 42, 43, 44, 45]},
+  sizes: {type: [Number], default: []},
   price: Number,
   img: [String], 
   liked: { type: Boolean, default: false },
@@ -32,9 +32,21 @@ const boxingGlovesSchema = new mongoose.Schema({
   description: {type: String, default: 'No description provided by Georgios, olo malakies kanei.'},
 });
 
+const boxingGearAllSchema = new mongoose.Schema({
+  category: String,
+  brand: String,
+  weight: Number,
+  price: Number,
+  sizes: {type: [Number], default: []},
+  img: [String], // Array of image URLs
+  liked: { type: Boolean, default: false },
+  description: {type: String, default: 'No description provided by Georgios, olo malakies kanei.'},
+})
+
 // Export both models
 export const boxingShoeModel = boxing_gearConnection.model("boxingShoeModel", boxingShoesSchema, "boxing-shoes");
 export const boxingGloveModel = boxing_gearConnection.model("boxingGloveModel", boxingGlovesSchema, "boxing-gloves");
 export const headGearModel = boxing_gearConnection.model("headGearModel", boxingHeadGearSchema, "headgears");
+export const boxingGearModel = boxing_gearConnection.model("boxingGearModel", boxingGearAllSchema, "boxingGearModels");
 
 

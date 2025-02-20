@@ -28,6 +28,8 @@ function App() {
       }
     };
 
+
+
   return (
     <BrowserRouter>
         <Navbar fetchCartData={fetchCartData} cartLength={cartLength} cartIsOpen={cartIsOpen} setCartIsOpen={setCartIsOpen} cartItems={cartItems} setCartItems={setCartItems}/>
@@ -47,3 +49,9 @@ function App() {
 export default App;
 
 //  https://g-kondylis.imgbb.com/   Is the image cloud im using for the mongoDB pictures
+
+// TO DO 
+// i have to have all my action in one Collection and give them filter of Categorie then use Query selector 
+// to render diferrent items fy filtering this category property.
+// Cart will be a different collection with get to render, post to be able to add, and delete endponts;
+// and favourites will render everything where the property of like is true
