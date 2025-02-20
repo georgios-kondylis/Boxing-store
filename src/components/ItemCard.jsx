@@ -51,9 +51,9 @@ const ItemCard = ({
             } text-nowrap transition-all duration-300`}
           >
             {justAdded ? (
-              <div className="flex items-center gap-[5px]">
+              <span className="flex items-center gap-[5px]">
                 <i className="text-[#32e632] text-[1.3rem] fa-solid fa-circle-check"></i> Added
-              </div>
+              </span>
             ) : (
               "Add to Cart"
             )}

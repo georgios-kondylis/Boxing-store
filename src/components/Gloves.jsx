@@ -4,7 +4,7 @@ import ItemCard from "./ItemCard";
 import { main_px, transition } from "../utils";
 
 
-const Gloves = ({ setCartIsOpen, cartIsOpen }) => {
+const Gloves = ({ setCartIsOpen, cartIsOpen, fetchCartData}) => {
   const [gloves, setGloves] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hoveredItems, setHoveredItems] = useState({});
@@ -42,6 +42,7 @@ const Gloves = ({ setCartIsOpen, cartIsOpen }) => {
 
       const result = await response.json();
       if (response.ok) {
+        fetchCartData();
         console.log("Item added to cart:", result.cartItem);
         setJustAddedItem(item._id); 
         setTimeout(() => setJustAddedItem(null), 2000);

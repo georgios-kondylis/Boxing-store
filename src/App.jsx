@@ -11,16 +11,30 @@ import HeadGear from "./components/HeadGear";
 import { useState } from "react";
 
 function App() {
-
+  const [cartItems, setCartItems] = useState([]);
   const [cartIsOpen, setCartIsOpen] = useState(false);
+  const [cartLength, setCartLength] = useState(0);
+
+    // Fetch Cart Data
+    const fetchCartData = async () => {
+      try {
+        const res = await fetch('http://localhost:5000/add-to-cart');
+        const cardDataInJson = await res.json();
+        setCartItems(cardDataInJson);
+        setCartLength(cardDataInJson.length);
+        console.log('cartUpdate')
+      } catch (err) {
+        console.log(`Error fetching cart: ${err}`);
+      }
+    };
 
   return (
     <BrowserRouter>
-        <Navbar  cartIsOpen={cartIsOpen} setCartIsOpen={setCartIsOpen}/>
+        <Navbar fetchCartData={fetchCartData} cartLength={cartLength} cartIsOpen={cartIsOpen} setCartIsOpen={setCartIsOpen} cartItems={cartItems} setCartItems={setCartItems}/>
 
         <Routes>
           <Route path="/" element={<h1>Home</h1>}/>
-          <Route path="/gloves" element={<Gloves setCartIsOpen={setCartIsOpen} cartIsOpen={cartIsOpen}/>}/>
+          <Route path="/gloves" element={<Gloves fetchCartData={fetchCartData} setCartIsOpen={setCartIsOpen} cartIsOpen={cartIsOpen}/>}/>
           <Route path="/mouthpiece" element={<Mouthpiece/>}/>
           <Route path="/headgear" element={<HeadGear/>}/>
           <Route path="/wraps" element={<Wraps/>}/>

@@ -2,38 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { main_px_navbar, transition } from './utils';
 
-const Navbar = ({cartIsOpen, setCartIsOpen}) => {
+const Navbar = ({ cartIsOpen, setCartIsOpen, cartItems, setCartItems, fetchCartData, cartLength }) => {
 
-  const [cartItems, setCartItems] = useState([]);
-  const [cartLength, setCartLength] = useState(0);
-  
-
+  // Fetch Cart Data Once on Mount
   useEffect(() => {
-    const fetchCartData = async () => {
-      try{
-        const res = await fetch('http://localhost:5000/add-to-cart')
-        const cardDataInJson = await res.json();
-        setCartItems(cardDataInJson);
-        setCartLength(cardDataInJson.length);
-        console.log('first')
-      } catch (err) {
-        console.log(`olo malakies : ${err}`)
-      }
-    }
     fetchCartData();
-  },[])
+  }, []); 
 
+  // Handle Delete
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5000/add-to-cart/${id}`, {method: 'DELETE'})
-      setCartItems((prevItems) => prevItems.filter((item) => item._id !== id))
+      await fetch(`http://localhost:5000/add-to-cart/${id}`, { method: 'DELETE' });
+      fetchCartData(); // Fetch updated cart after deleting an item
     } catch (err) {
       console.error('Error deleting item:', err);
     }
-  }
+  };
 
   // Calculate total amount
-  const totalAmount = cartItems.reduce((total, item) => total + item.price, 0); 
+  const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
 
   return (
     <>
@@ -55,7 +42,7 @@ const Navbar = ({cartIsOpen, setCartIsOpen}) => {
           </div>
 
           <div id='Cart-&-Heart' className='text-[1.4rem] flex items-center gap-[20px]'>
-            <div className='relative cursor-pointer'  onClick={() => setCartIsOpen(true)}>
+            <div className='relative cursor-pointer' onClick={() => setCartIsOpen(true)}>
               <i className="text-[1.4rem] fa-solid fa-cart-shopping"></i>
               <div className={`absolute ${cartLength < 1 ? 'hidden' : ''} top-[-5px] right-[-10px] w-[15px] h-[15px] flex items-center justify-center rounded-full bg-[#dc3030]`}>
                 <p className='text-[13px]'>{cartLength}</p>
@@ -79,25 +66,23 @@ const Navbar = ({cartIsOpen, setCartIsOpen}) => {
 
               <div id='cart-items-container' className='mt-[10px] pb-[60px] flex flex-col gap-[10px] px-4'>
                 {cartItems.length > 0 ?
-                cartItems.map((item) => (
-                  <div key={item._id} className='flex justify-between items-center p-2 border-b'>
-                    <div className='flex items-center gap-4'>
-                      <img src={item.img[0]} className='object-contain w-[70px] h-[70px]' alt='No image' />
-                      <div className='flex flex-col'>
-                        <p>{item.brand}</p>
-                        <p>{item.price} €</p>
+                  cartItems.map((item) => (
+                    <div key={item._id} className='flex justify-between items-center p-2 border-b'>
+                      <div className='flex items-center gap-4'>
+                        <img src={item.img[0]} className='object-contain w-[70px] h-[70px]' alt='No image' />
+                        <div className='flex flex-col'>
+                          <p>{item.brand}</p>
+                          <p>{item.price} €</p>
+                        </div>
                       </div>
-                    </div>
 
-                    <button className={`rounded-full hover:scale-110 hover:text-redEasy ${transition} text-xl`}
-                            onClick={() => handleDelete(item._id)}>
-                      <i className="fa-solid fa-trash-can"></i>
-                    </button>
-                  </div>
-                ))
-                
-                : <p className='mx-auto'>Your Cart is empty</p>}
-                
+                      <button className={`rounded-full hover:scale-110 hover:text-redEasy ${transition} text-xl`}
+                              onClick={() => handleDelete(item._id)}>
+                        <i className="fa-solid fa-trash-can"></i>
+                      </button>
+                    </div>
+                  ))
+                  : <p className='mx-auto'>Your Cart is empty</p>}
               </div>
 
               {/* Total Amount Section */}
