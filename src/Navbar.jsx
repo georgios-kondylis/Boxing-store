@@ -24,7 +24,7 @@ const Navbar = ({ cartIsOpen, setCartIsOpen, cartItems, setCartItems, fetchCartD
 
   return (
     <>
-      <div id='navbar-container' className='fixed z-50 text-white w-full bg-mainBg border-b flex justify-center'>
+      <div id='navbar-container' className='fixed z-50 text-white w-full bg-mainBg2 border-b flex justify-center'>
 
         <div id='navbar' className={`${main_px_navbar} ${transition} max-w-[1540px] shadow-xl w-full items-center flex justify-between h-[70px]`}>
           <div id='logo' className='flex items-center gap-[0px]'>
