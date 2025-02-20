@@ -10,6 +10,9 @@ export default {
         mainBg: '#404040',
         mainBg2: '#606060',
         redEasy: '#eb5656e6'
+      },
+      screens: {
+        xs: {max: '470px'}
       }
     },
   },

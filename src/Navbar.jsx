@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+import { main_px_navbar, transition } from './utils';
 
 const Navbar = ({cartIsOpen, setCartIsOpen}) => {
-  const transition = 'transition-all ease-in-out duration-300';
+
   const [cartItems, setCartItems] = useState([]);
   const [cartLength, setCartLength] = useState(0);
   
@@ -14,13 +15,13 @@ const Navbar = ({cartIsOpen, setCartIsOpen}) => {
         const cardDataInJson = await res.json();
         setCartItems(cardDataInJson);
         setCartLength(cardDataInJson.length);
-        console.log(cardDataInJson)
+        console.log('first')
       } catch (err) {
         console.log(`olo malakies : ${err}`)
       }
     }
     fetchCartData();
-  },[cartItems])
+  },[])
 
   const handleDelete = async (id) => {
     try {
@@ -36,18 +37,18 @@ const Navbar = ({cartIsOpen, setCartIsOpen}) => {
 
   return (
     <>
-      <div id='navbar-container' className='text-white w-full bg-[#292929] border-b flex justify-center'>
+      <div id='navbar-container' className='fixed z-50 text-white w-full bg-mainBg border-b flex justify-center'>
 
-        <div id='navbar' className='relative w-full items-center flex justify-around h-[70px]'>
+        <div id='navbar' className={`${main_px_navbar} ${transition} max-w-[1540px] shadow-xl w-full items-center flex justify-between h-[70px]`}>
           <div id='logo' className='flex items-center gap-[0px]'>
             <img className='w-[70px]' src="/logoBox.png" alt="" />
             <h1>Gamias</h1>
           </div>
 
           <div id='navlinks' className='flex gap-[20px] justify-around'>
-            <NavLink to='/boxers' className='hover:text-gray-300'>Boxers</NavLink>
+            <NavLink to='/' className='hover:text-gray-300'>Home</NavLink>
             <NavLink to='/gloves' className='hover:text-gray-300'>Gloves</NavLink>
-            <NavLink to='/gloves' className='hover:text-gray-300'>Head-gear</NavLink>
+            <NavLink to='/headgear' className='hover:text-gray-300'>Head-gear</NavLink>
             <NavLink to='/wraps' className='hover:text-gray-300'>Wraps</NavLink>
             <NavLink to='/mouthpiece' className='hover:text-gray-300'>Mouthpiece</NavLink>
             <NavLink to='/shoes' className='hover:text-gray-300'>Shoes</NavLink>
@@ -62,12 +63,12 @@ const Navbar = ({cartIsOpen, setCartIsOpen}) => {
             </div>
 
             <div>
-               <i class="fa-solid fa-heart-circle-check"></i>
+               <i className="fa-solid fa-heart-circle-check"></i>
             </div>
           </div>
 
           {/* Side Cart Panel */}
-          <div id='sidenav' className={`z-50 fixed bg-[#2e2e2e] top-0 overflow-y-auto h-full w-[400px] ${cartIsOpen ? 'right-0' : 'right-[-500px]'} transition-all ease-in-out duration-300`}>
+          <div id='sidenav' className={`z-50 fixed bg-[#2e2e2e] top-0 overflow-y-auto h-full w-[45%] max-w-[400px] ${cartIsOpen ? 'right-0' : 'right-[-500px]'} transition-all ease-in-out duration-300`}>
             <div className='border-b w-full h-[70px] flex justify-start items-center'>
               <button className='text-[1.5rem] ml-[20px]' onClick={() => setCartIsOpen(false)}>
                 <i className="fa-solid fa-right-from-bracket"></i>

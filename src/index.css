@@ -2,8 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+html, body {
   overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
   margin: 0; /* Optional: Removes default margin */
   padding: 0; /* Optional: Removes default padding */
 }
