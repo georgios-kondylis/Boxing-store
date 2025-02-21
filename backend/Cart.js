@@ -4,9 +4,10 @@ const MONGO_URI_Boxing_gear = process.env.MONGO_URI_Boxing_gear;
 const boxing_gearConnection = mongoose.createConnection(MONGO_URI_Boxing_gear);
 
 const cartSchema = new mongoose.Schema({
+  category: String,
   brand: String,
   weight: Number, 
-  sizes: [Number],
+  sizes:  {type: [Number], default: [] },
   liked: Boolean,
   price: Number,
   img: [String],
@@ -14,9 +15,10 @@ const cartSchema = new mongoose.Schema({
 });
 
 const favouritesSchema = new mongoose.Schema({
+  category: String,
   brand: String,
   weight: Number, 
-  sizes: [Number],
+  sizes: {type: [Number], default: [] },
   liked: Boolean,
   price: Number,
   img: [String],

@@ -16,8 +16,8 @@ router.get('/', async (req, res) => {
 // POST - Add item to cart
 router.post('/', async (req, res) => {
   try {
-    const { brand, weight, price, img } = req.body;
-    const newCartItem = new Cart({ brand, weight, price, img });
+    const { category, brand, weight, price, sizes, img, liked, description } = req.body;
+    const newCartItem = new Cart({category, brand, weight, price, sizes, img, liked, description });
     await newCartItem.save();
     res.status(200).json({ message: 'Item added to cart', cartItem: newCartItem });
   } catch (error) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const ItemCard = ({
   item,
@@ -9,6 +9,14 @@ const ItemCard = ({
   handleMouseLeave,
   justAdded,
 }) => {
+  const [selectedSize, setSelectedSize] = useState(null); // State to track selected size
+
+  const handleSizeClick = (size) => {
+    setSelectedSize((prevSelectedSize) => 
+      prevSelectedSize === size ? null : size // Toggle logic
+    );
+  };
+
   return (
     <div
       className="bg-white border-black border px-[20px] py-[10px] flex flex-col justify-between gap-[10px] rounded-lg shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-300"
@@ -28,8 +36,22 @@ const ItemCard = ({
 
       <div className="flex items-end justify-between">
         <div>
-          {item.weight && <p className="text-gray-700">Weight: {item.weight} oz</p>}
-          {item.size && <p className="text-gray-700">Size: {item.size}</p>}
+          {item.weight > 0 && <p className="text-gray-700">Weight: {item.weight} oz</p>}
+          {item.sizes.length > 1 && (
+            <div className="flex items-center gap-[5px]">
+              Size:
+              <div className="flex gap-[5px] rounded-full max-w-[150px] text-gray-700">
+                {item.sizes.map((size, i) => (
+                  <p key={i} className={`border rounded-full px-[2px] text-[13px] hover:scale-125 cursor-pointer transition-all duration-300 
+                    ${selectedSize === size ? "scale-[1.2] bg-mainBg text-white" : "border-[#262626ad] text-[13px]" }`}
+                    onClick={() => handleSizeClick(size)} // Handle size selection
+                  >
+                    {size}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
           <p className="text-gray-700">Price: {item.price} €</p>
         </div>
 
@@ -38,11 +60,9 @@ const ItemCard = ({
           onMouseEnter={() => handleMouseEnter(item._id)}
           onMouseLeave={() => handleMouseLeave(item._id)}
           onClick={(event) => {
-            event.stopPropagation();  // Prevents the click from closing the cart
+            event.stopPropagation(); // Prevents the click from closing the cart
             handleAddToCart(item);
-           
           }}
-          
         >
           <i className="text-[1.4rem] fa-solid fa-cart-plus"></i>
           <p

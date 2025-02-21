@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useSearchParams } from 'react-router-dom';
 import { main_px_navbar, transition } from './utils';
 
 const Navbar = ({ cartIsOpen, setCartIsOpen, cartItems, setCartItems, fetchCartData, cartLength }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
 
   // Fetch Cart Data Once on Mount
   useEffect(() => {
@@ -33,12 +34,15 @@ const Navbar = ({ cartIsOpen, setCartIsOpen, cartItems, setCartItems, fetchCartD
           </div>
 
           <div id='navlinks' className='flex gap-[20px] justify-around'>
-            <NavLink to='/' className='hover:text-gray-300'>Home</NavLink>
+            <button onClick={() => setSearchParams({category: 'gloves'})}>Gloves</button>
+            <button onClick={() => setSearchParams({category: 'wraps'})}>Wraps</button>
+            <button onClick={() => setSearchParams({category: 'shoes'})}>Shoes</button>
+            {/* <NavLink to='/' className='hover:text-gray-300'>Home</NavLink>
             <NavLink to='/gloves' className='hover:text-gray-300'>Gloves</NavLink>
             <NavLink to='/headgear' className='hover:text-gray-300'>Head-gear</NavLink>
             <NavLink to='/wraps' className='hover:text-gray-300'>Wraps</NavLink>
             <NavLink to='/mouthpiece' className='hover:text-gray-300'>Mouthpiece</NavLink>
-            <NavLink to='/shoes' className='hover:text-gray-300'>Shoes</NavLink>
+            <NavLink to='/shoes' className='hover:text-gray-300'>Shoes</NavLink> */}
           </div>
 
           <div id='Cart-&-Heart' className='text-[1.4rem] flex items-center gap-[20px]'>

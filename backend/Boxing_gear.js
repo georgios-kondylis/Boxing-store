@@ -33,12 +33,12 @@ const boxingGlovesSchema = new mongoose.Schema({
 });
 
 const boxingGearAllSchema = new mongoose.Schema({
-  category: String,
-  brand: String,
-  weight: Number,
-  price: Number,
+  category: {type: String, default: 'Undefined'},
+  brand: {type: String, default: 'Undefined'},
+  weight: {type: Number, default: 0},
+  price: {type: Number, default: 0},
   sizes: {type: [Number], default: []},
-  img: [String], // Array of image URLs
+  img: {type: [String], default: []}, // Array of image URLs
   liked: { type: Boolean, default: false },
   description: {type: String, default: 'No description provided by Georgios, olo malakies kanei.'},
 })

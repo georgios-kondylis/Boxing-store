@@ -1,14 +1,9 @@
 
-import { Route, Routes } from "react-router-dom";
-import { BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Navbar from "./Navbar";
-import Boxers from "./components/Boxers";
 import Gloves from "./components/Gloves";
-import Mouthpiece from "./components/Mouthpiece";
-import Wraps from "./components/Wraps";
-import Shoes from "./components/Shoes";
-import HeadGear from "./components/HeadGear";
 import { useState } from "react";
+import Home from "./components/Home";
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -22,7 +17,7 @@ function App() {
         const cardDataInJson = await res.json();
         setCartItems(cardDataInJson);
         setCartLength(cardDataInJson.length);
-        console.log('cartUpdate')
+        // console.log('cartUpdate')
       } catch (err) {
         console.log(`Error fetching cart: ${err}`);
       }
@@ -32,15 +27,20 @@ function App() {
 
   return (
     <BrowserRouter>
-        <Navbar fetchCartData={fetchCartData} cartLength={cartLength} cartIsOpen={cartIsOpen} setCartIsOpen={setCartIsOpen} cartItems={cartItems} setCartItems={setCartItems}/>
+        <Navbar fetchCartData={fetchCartData} 
+                cartLength={cartLength} 
+                cartIsOpen={cartIsOpen} 
+                setCartIsOpen={setCartIsOpen} 
+                cartItems={cartItems} 
+                setCartItems={setCartItems}
+          />
 
         <Routes>
-          <Route path="/" element={<h1>Home</h1>}/>
-          <Route path="/gloves" element={<Gloves fetchCartData={fetchCartData} setCartIsOpen={setCartIsOpen} cartIsOpen={cartIsOpen}/>}/>
-          <Route path="/mouthpiece" element={<Mouthpiece/>}/>
-          <Route path="/headgear" element={<HeadGear/>}/>
-          <Route path="/wraps" element={<Wraps/>}/>
-          <Route path="/shoes" element={<Shoes/>}/>
+          <Route path="/" element={<Home 
+                 fetchCartData={fetchCartData} 
+                 setCartIsOpen={setCartIsOpen} 
+                 cartIsOpen={cartIsOpen}/>
+              }/>
         </Routes>
     </BrowserRouter>
   );

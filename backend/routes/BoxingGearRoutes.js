@@ -1,5 +1,5 @@
 import express from 'express';
-import { boxingGearModel } from '../Boxing_gear';
+import { boxingGearModel } from '../Boxing_gear.js';
 
 const router = express.Router();
 
@@ -47,3 +47,5 @@ router.put('/', async (req, res) => {
     res.status(500).json({ message: 'Error updating gear', error });
   }
 });
+
+export default router;
