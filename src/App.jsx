@@ -9,6 +9,7 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [cartIsOpen, setCartIsOpen] = useState(false);
   const [cartLength, setCartLength] = useState(0);
+  const [likedItems, setLikedItems] = useState([]);
 
     // Fetch Cart Data
     const fetchCartData = async () => {
@@ -22,8 +23,17 @@ function App() {
         console.log(`Error fetching cart: ${err}`);
       }
     };
-
-
+    const fetchLiked = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/allBoxingGear");
+        const data = await response.json();
+        const liked = data.filter((item) => item.liked === true);
+        setLikedItems(liked);
+        console.log(likedItems)
+      } catch (error) {
+        console.error("Error fetching gear:", error);
+      } 
+    };
 
   return (
     <BrowserRouter>
@@ -33,13 +43,16 @@ function App() {
                 setCartIsOpen={setCartIsOpen} 
                 cartItems={cartItems} 
                 setCartItems={setCartItems}
+                likedItems={likedItems}
           />
 
         <Routes>
           <Route path="/" element={<Home 
                  fetchCartData={fetchCartData} 
                  setCartIsOpen={setCartIsOpen} 
-                 cartIsOpen={cartIsOpen}/>
+                 cartIsOpen={cartIsOpen}
+                 likedItems={likedItems} setLikedItems={setLikedItems}
+                 fetchLiked={fetchLiked}/>
               }/>
         </Routes>
     </BrowserRouter>

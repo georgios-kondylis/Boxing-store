@@ -5,7 +5,7 @@ import { main_px, transition } from "../utils";
 import { useSearchParams } from "react-router-dom";
 
 
-const Home = ({ setCartIsOpen, cartIsOpen, fetchCartData}) => {
+const Home = ({ setCartIsOpen, cartIsOpen, fetchCartData, setLikedItems, fetchLiked}) => {
   const [boxingGear, setBoxingGear] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hoveredItems, setHoveredItems] = useState({});
@@ -21,7 +21,9 @@ const Home = ({ setCartIsOpen, cartIsOpen, fetchCartData}) => {
         const response = await fetch("http://localhost:5000/allBoxingGear");
         const data = await response.json();
         const filteredGear = data.filter((item) => item.category === paramsCategory);
+        const liked = data.filter((item) => item.liked === true);
         setBoxingGear(filteredGear);
+        setLikedItems(liked);
         // console.log('render')
       } catch (error) {
         console.error("Error fetching gear:", error);
@@ -74,6 +76,7 @@ const Home = ({ setCartIsOpen, cartIsOpen, fetchCartData}) => {
           gear._id === item._id ? { ...gear, liked: updatedLikedStatus } : gear  // Only update the clicked item
         )
       );
+      fetchLiked();
   
       // Now make the PUT request to update the backend
       const response = await fetch("http://localhost:5000/allBoxingGear", {

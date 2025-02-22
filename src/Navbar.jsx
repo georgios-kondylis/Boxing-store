@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet, useSearchParams } from 'react-router-dom';
 import { main_px_navbar, transition } from './utils';
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
-const Navbar = ({ cartIsOpen, setCartIsOpen, cartItems, setCartItems, fetchCartData, cartLength }) => {
+const Navbar = ({ cartIsOpen, setCartIsOpen, cartItems, setCartItems, fetchCartData, cartLength, likedItems }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const category = searchParams.get("category") || ""; // Get current category from URL to dispaly as the option label
+  const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
 
-  // Fetch Cart Data Once on Mount
   useEffect(() => {
     fetchCartData();
   }, []); 
 
-  // Handle Delete
   const handleDelete = async (id) => {
     try {
       await fetch(`http://localhost:5000/add-to-cart/${id}`, { method: 'DELETE' });
@@ -20,30 +21,46 @@ const Navbar = ({ cartIsOpen, setCartIsOpen, cartItems, setCartItems, fetchCartD
     }
   };
 
-  // Calculate total amount
-  const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
+  const handleCategoryChange = (event) => {
+   const selectedCatecory = event.target.value;
+   setSearchParams({category: selectedCatecory});
+  }
+
 
   return (
     <>
       <div id='navbar-container' className='fixed z-50 text-white w-full bg-mainBg2 border-b flex justify-center'>
 
         <div id='navbar' className={`${main_px_navbar} ${transition} max-w-[1540px] shadow-xl w-full items-center flex justify-between h-[70px]`}>
-          <div id='logo' className='flex items-center gap-[0px]'>
-            <img className='w-[70px]' src="/logoBox.png" alt="" />
-            <h1>Gamias</h1>
-          </div>
-
-          <div id='navlinks' className='flex gap-[20px] justify-around'>
-            <button onClick={() => setSearchParams({category: 'gloves'})}>Gloves</button>
-            <button onClick={() => setSearchParams({category: 'wraps'})}>Wraps</button>
-            <button onClick={() => setSearchParams({category: 'shoes'})}>Shoes</button>
-            {/* <NavLink to='/' className='hover:text-gray-300'>Home</NavLink>
-            <NavLink to='/gloves' className='hover:text-gray-300'>Gloves</NavLink>
-            <NavLink to='/headgear' className='hover:text-gray-300'>Head-gear</NavLink>
-            <NavLink to='/wraps' className='hover:text-gray-300'>Wraps</NavLink>
-            <NavLink to='/mouthpiece' className='hover:text-gray-300'>Mouthpiece</NavLink>
-            <NavLink to='/shoes' className='hover:text-gray-300'>Shoes</NavLink> */}
-          </div>
+          <div id='Logo_&_Select' className='flex items-center gap-[20px]'>
+            <div className='flex items-center'>
+              <img className='w-[70px]' src="/logoBox.png" alt="" />
+              <h1>Gamias</h1>
+            </div>
+              <FormControl sx={{ width: '200px', '& .MuiOutlinedInput-root': 
+                  {'&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'white', } , },  // Change focus border color
+                  '.MuiOutlinedInput-notchedOutline': {  borderColor: 'gray',}, // default border color
+                    '&:hover .MuiOutlinedInput-notchedOutline': {  borderColor: '#fff',}, //  border color on hover
+                    '& .MuiInputLabel-root': { color: 'white', bgcolor: '#606060', paddingRight: '5px'}, // anim label color
+                    '& .MuiInputLabel-root.Mui-focused': { color: 'white', }, // hover label color when focused 
+                    '& .MuiSvgIcon-root': { color: 'white'}, // Change arrow icon color
+                    }}>
+                  <InputLabel id="Category">Category</InputLabel>
+                  <Select labelId="category-select-label" id="category-select" value={category} label="Category"
+                    onChange={handleCategoryChange} // Updates search params
+                    MenuProps={{ PaperProps: {sx: {
+                          backgroundColor: '#333', // Dropdown background color
+                          color: 'white',}} // Text color inside dropdown
+                     }} sx={{  '& .MuiSelect-select': { color: '#fff',}}} // Color of selected item  
+                  >
+                    <MenuItem value="gloves" >Gloves</MenuItem>
+                    <MenuItem value="wraps">Wraps</MenuItem>
+                    <MenuItem value="shoes">Shoes</MenuItem>
+                    <MenuItem value="headgear">Headgear</MenuItem>
+                    <MenuItem value="mouthpiece">Mouthpiece</MenuItem>
+                  </Select>
+              </FormControl>
+          </div> 
 
           <div id='Cart-&-Heart' className='text-[1.4rem] flex items-center gap-[20px]'>
             <div className='relative cursor-pointer' onClick={() => setCartIsOpen(true)}>
@@ -53,9 +70,23 @@ const Navbar = ({ cartIsOpen, setCartIsOpen, cartItems, setCartItems, fetchCartD
               </div>
             </div>
 
-            <div className='border'>
+            <div className='relative cursor-pointer'>
                <i className="fa-solid fa-heart-circle-check"></i>
+               <div className={`absolute ${cartLength < 1 ? 'hidden' : ''} top-[-5px] right-[-10px] w-[15px] h-[15px] flex items-center justify-center rounded-full bg-[#dc3030]`}>
+                <p className='text-[13px]'>{cartLength}</p>
+              </div>
             </div>
+          </div>
+
+          <div className=' z-10 h-full w-[400px] bg-white'>
+          {likedItems.map((item, i) => {
+              console.log(item); // Check if 'brand' exists for each item
+              return (
+                <p key={item._id} className='z-50 text-[2rem] text-black'>
+                  {item.brand}
+                </p>
+              );
+            })}
           </div>
 
           {/* Side Cart Panel */}
