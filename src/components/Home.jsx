@@ -84,11 +84,11 @@ const Home = ({ setCartIsOpen, cartIsOpen, fetchCartData, setLikedItems, fetchLi
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ _id: item._id }),  // Send the item ID to toggle the liked status
       });
-  
       const result = await response.json();
       if (!response.ok) {
         console.error("Failed to update like status:", result.error);
       }
+      fetchLiked();
     } catch (error) {
       console.error("Error toggling like status:", error);
     }

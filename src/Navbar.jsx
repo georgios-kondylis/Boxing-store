@@ -78,7 +78,7 @@ const Navbar = ({ cartIsOpen, setCartIsOpen, cartItems, setCartItems, fetchCartD
             </div>
           </div>
 
-          <div className=' z-10 h-full w-[400px] bg-white'>
+          <div className='absolute left-0 h-full w-[400px] bg-white'>
           {likedItems.map((item, i) => {
               console.log(item); // Check if 'brand' exists for each item
               return (
