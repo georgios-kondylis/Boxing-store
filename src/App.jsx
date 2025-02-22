@@ -8,6 +8,7 @@ import Home from "./components/Home";
 function App() {
   const [cartItems, setCartItems] = useState([]);
   const [cartIsOpen, setCartIsOpen] = useState(false);
+  const [favsIsOpen, setFavsIsOpen] = useState(false);
   const [cartLength, setCartLength] = useState(0);
   const [likedItems, setLikedItems] = useState([]);
 
@@ -23,6 +24,7 @@ function App() {
         console.log(`Error fetching cart: ${err}`);
       }
     };
+    
     const fetchLiked = async () => {
       try {
         const response = await fetch("http://localhost:5000/allBoxingGear");
@@ -39,8 +41,8 @@ function App() {
     <BrowserRouter>
         <Navbar fetchCartData={fetchCartData} 
                 cartLength={cartLength} 
-                cartIsOpen={cartIsOpen} 
-                setCartIsOpen={setCartIsOpen} 
+                cartIsOpen={cartIsOpen} setCartIsOpen={setCartIsOpen} 
+                favsIsOpen={favsIsOpen} setFavsIsOpen={setFavsIsOpen}
                 cartItems={cartItems} 
                 setCartItems={setCartItems}
                 likedItems={likedItems}

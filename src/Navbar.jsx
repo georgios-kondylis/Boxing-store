@@ -3,7 +3,13 @@ import { NavLink, Outlet, useSearchParams } from 'react-router-dom';
 import { main_px_navbar, transition } from './utils';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
-const Navbar = ({ cartIsOpen, setCartIsOpen, cartItems, setCartItems, fetchCartData, cartLength, likedItems }) => {
+
+const Navbar = ({ 
+  cartIsOpen, setCartIsOpen,
+  favsIsOpen , setFavsIsOpen,
+  cartItems, setCartItems, 
+  fetchCartData, cartLength, 
+  likedItems }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get("category") || ""; // Get current category from URL to dispaly as the option label
   const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
@@ -69,28 +75,43 @@ const Navbar = ({ cartIsOpen, setCartIsOpen, cartItems, setCartItems, fetchCartD
                 <p className='text-[13px]'>{cartLength}</p>
               </div>
             </div>
-
-            <div className='relative cursor-pointer'>
+                     {/* HEART-ICON */}
+            <div className='relative cursor-pointer' onClick={() => setFavsIsOpen(true)}>
                <i className="fa-solid fa-heart-circle-check"></i>
-               <div className={`absolute ${cartLength < 1 ? 'hidden' : ''} top-[-5px] right-[-10px] w-[15px] h-[15px] flex items-center justify-center rounded-full bg-[#dc3030]`}>
-                <p className='text-[13px]'>{cartLength}</p>
+               <div className={`absolute ${likedItems < 1 ? 'hidden' : ''} top-[-4px] right-[-10px] w-[15px] h-[15px] flex items-center justify-center rounded-full bg-[#dc3030]`}>
+                <p className='text-[13px]'>{likedItems.length}</p>
               </div>
             </div>
           </div>
 
-          <div className='absolute left-0 h-full w-[400px] bg-white'>
-          {likedItems.map((item, i) => {
-              console.log(item); // Check if 'brand' exists for each item
-              return (
-                <p key={item._id} className='z-50 text-[2rem] text-black'>
-                  {item.brand}
-                </p>
-              );
-            })}
+          {/* Favs-Section */}
+          <div className={`fixed ${favsIsOpen? 'right-0' : 'right-[-900px]'} top-0 h-full w-[400px] bg-mainBg p-[20px] shadow-lg ${transition}`}>
+            <div>
+              <button className='text-[1.5rem] ml-[20px]' onClick={() => setFavsIsOpen(false)}>
+                  <i className="fa-solid fa-right-from-bracket"></i>
+              </button>
+            </div>
+             {likedItems.map((item) => (
+            <div key={item._id} className='flex gap-[20px] items-center border-b'>
+              <img className='w-[80px]' src={item.img} alt="" />
+              <div className='flex flex-col'>
+                <p className=' text-[1rem] text-white'> {item.brand}</p>
+                <p className=' text-[1rem] text-white'> {item.price} € </p>
+              </div>
+              
+              <div className='flex flex-col gap-[15px] text-[1.3rem]'>
+                <div className='relative'>
+                  <i className="text-redEasy fa-solid fa-heart"></i>
+                  <i class={`absolute hover:scale-[1.3] top-[5px] left-[5px] py-[7px] px-[6px] text-[0.7rem] fa-solid fa-circle-xmark ${transition}`}></i>
+                </div>
+                 <i class="fa-solid fa-cart-plus"></i>
+              </div>
+            </div>
+             ))}
           </div>
 
           {/* Side Cart Panel */}
-          <div id='sidenav' className={`z-50 fixed bg-[#2e2e2e] top-0 overflow-y-auto h-full w-[45%] max-w-[400px] ${cartIsOpen ? 'right-0' : 'right-[-500px]'} transition-all ease-in-out duration-300`}>
+          <div id='sidenav' className={`z-50 fixed bg-[#2e2e2e] top-0 overflow-y-auto h-full w-[45%] max-w-[400px] ${cartIsOpen ? 'right-0' : 'right-[-500px]'} ${transition}`}>
             <div className='border-b w-full h-[70px] flex justify-start items-center'>
               <button className='text-[1.5rem] ml-[20px]' onClick={() => setCartIsOpen(false)}>
                 <i className="fa-solid fa-right-from-bracket"></i>
@@ -129,7 +150,7 @@ const Navbar = ({ cartIsOpen, setCartIsOpen, cartItems, setCartItems, fetchCartD
 
           </div>
           {/* Favourites Panel */}
-          <div id='Favourites' className={`z-50 fixed bg-[#2e2e2e] top-0 overflow-y-auto h-full w-[45%] max-w-[400px] ${cartIsOpen ? 'right-0' : 'right-[-500px]'} transition-all ease-in-out duration-300`}>
+          {/* <div id='Favourites' className={`z-50 fixed bg-[#2e2e2e] top-0 overflow-y-auto h-full w-[45%] max-w-[400px] ${cartIsOpen ? 'right-0' : 'right-[-500px]'} transition-all ease-in-out duration-300`}>
             <div className='border-b w-full h-[70px] flex justify-start items-center'>
               <button className='text-[1.5rem] ml-[20px]' onClick={() => setCartIsOpen(false)}>
                 <i className="fa-solid fa-right-from-bracket"></i>
@@ -159,14 +180,13 @@ const Navbar = ({ cartIsOpen, setCartIsOpen, cartItems, setCartItems, fetchCartD
                   : <p className='mx-auto'>Your Cart is empty</p>}
               </div>
 
-              {/* Total Amount Section */}
               <div className="z-10 fixed bottom-0 bg-mainBg w-full p-4 border-t flex justify-between text-lg">
                 <p>Total Amount: {totalAmount.toFixed(2)} €</p>
               </div>
 
             </div>
 
-          </div>
+          </div> */}
         </div>
 
       </div>
