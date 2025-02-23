@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet, useSearchParams } from 'react-router-dom';
 import { main_px_navbar, transition } from './utils';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = ({ 
   cartIsOpen, setCartIsOpen,
@@ -17,6 +17,8 @@ const Navbar = ({
   const category = searchParams.get("category") || ""; // Get current category from URL to dispaly as the option label
   const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
   const [navHovereditems, setNavHoveredItems] = useState({});
+  const location = useLocation();
+  console.log(location)
 
   useEffect(() => {
     fetchCartData();
@@ -50,6 +52,7 @@ const Navbar = ({
 
         <div id='navbar' className={`${main_px_navbar} ${transition} max-w-[1540px] shadow-xl w-full items-center flex justify-between h-[70px]`}>
           
+          {!location.pathname.startsWith('/product/') && (
           <div id='Form_And_Hamburger'>
             <FormControl sx={{ width: '160px', '& .MuiOutlinedInput-root': 
                 {'&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'white', } , },  // Change focus border color
@@ -75,10 +78,10 @@ const Navbar = ({
                 </Select>
             </FormControl>
           </div>
+          )}
 
           <div className='flex items-center'>
-            <img className='w-[70px]' src="/logoBox.png" alt="" />
-            <h1>Gamias</h1>
+            <img className='w-[70px]' src="/punchlab.png" alt="" />
           </div>
           
 

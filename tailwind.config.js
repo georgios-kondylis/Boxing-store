@@ -10,7 +10,8 @@ export default {
         mainBg: '#404040',
         mainBg2: '#606060',
         redEasy: '#eb5656e6',
-        boxBlack: '#404040'
+        boxBlack: '#202020',
+        mainBeige: '#faebd7'
       },
       screens: {
         xs: {max: '470px'}

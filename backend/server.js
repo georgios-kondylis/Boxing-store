@@ -1,13 +1,10 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import { boxingShoeModel, boxingGloveModel, headGearModel, boxingGearModel } from "./Boxing_gear.js";
+import { boxingGearModel } from "./Boxing_gear.js";
 import { Cart } from "./Cart.js";
 
 // Routes
-import boxerRoutes from "./routes/boxerRoutes.js";  // Import the boxerRoutes
-import boxingShoesRoute from "./routes/BoxingShoesRoutes.js"; // import the routes to render boxing shoes
-import boxingGlovesRoutes from "./routes/BoxingGlovesRoutes.js"; 
 import cartRoutes from "./routes/cartRoutes.js"; 
 import boxingGearRoutes from "./routes/BoxingGearRoutes.js"; 
 
@@ -19,9 +16,6 @@ app.use(express.json({ limit: '10mb' }));  // Increase the limit for the body pa
 app.use(cors());
 
 app.use('/allBoxingGear', boxingGearRoutes)     // http://localhost:5000/allBoxingGear
-app.use('/boxers', boxerRoutes);
-app.use('/boxing_shoes', boxingShoesRoute);
-app.use('/boxing_gloves', boxingGlovesRoutes);  // http://localhost:5000/boxing_gloves
 app.use('/add-to-cart', cartRoutes);            // http://localhost:5000/add-to-cart
 
 
@@ -45,16 +39,16 @@ const createBoxingGear = async () => {
       // { category: 'gloves', brand: "Everlast", price: 90, weight: 14, img: ['https://i.ibb.co/1thNTsWP/everlast-Black.png'] },
       // // ------------
       // Shoes
-      { category: 'shoes', brand: "Venum", price: 120, sizes: [42, 43, 44, 45], img: ['https://i.ibb.co/QvtPB9Rr/Black-White-Gold-Venum-Elite-Boxing-Shoes-AMZ.png'] },
-      { category: 'shoes', brand: "Venum", price: 120, sizes: [41, 42, 43, 44], img: ['https://i.ibb.co/q3hK0mmR/VENUM-04958-603-R-Venum-Contender-Boxing-Shoes-Black-Gold-Red.png'] },
-      { category: 'shoes', brand: "Venum", price: 120, sizes: [41, 42, 43, 44, 45], img: ['https://i.ibb.co/20QQ3c2m/venum-contender-boxing-shoes-black-gold-1.png'] },
-      { category: 'shoes', brand: "Nike", price: 210, sizes: [41, 42, 43, 44], img: ['https://i.ibb.co/3YB7bwDg/nike-machomai-boxing-shoes-white-black-1.png'] },
-      { category: 'shoes', brand: "Nike", price: 210, sizes: [41, 42, 43, 44, 45], img: ['https://i.ibb.co/8D7Pn5SM/Nike-Machomai-2-Boxing-Boots-Black-White.png'] },
-      { category: 'shoes', brand: "Everlast", price: 90, sizes: [41, 42, 43, 44], img: ['https://i.ibb.co/7d7N7pQV/everlast-ultimate-boxing-shoes-black-1.png'] },
-      { category: 'shoes', brand: "Everlast", price: 120, sizes: [ 42, 43, 44, 45], img: ['https://i.ibb.co/DPkJg1mC/411j0-RNn-Ou-L-AC.png'] },
-      { category: 'shoes', brand: "Adidas", price: 210, sizes: [ 42, 43, 44, 45], img: ['https://i.ibb.co/M5tp98rg/51-Udba-MFl-HL-AC-SY675.png'] },
-      { category: 'shoes', brand: "Adidas", price: 210, sizes: [41, 42, 43, 44,], img: ['https://i.ibb.co/hJf7wtC0/54868081-17-D1-4-A09-97-AF-D0310-A7-AFD0-D-06492.png'] },
-      // // ------------
+      // { category: 'shoes', brand: "Venum", price: 120, sizes: [42, 43, 44, 45], img: ['https://i.ibb.co/QvtPB9Rr/Black-White-Gold-Venum-Elite-Boxing-Shoes-AMZ.png'] },
+      // { category: 'shoes', brand: "Venum", price: 120, sizes: [41, 42, 43, 44], img: ['https://i.ibb.co/q3hK0mmR/VENUM-04958-603-R-Venum-Contender-Boxing-Shoes-Black-Gold-Red.png'] },
+      // { category: 'shoes', brand: "Venum", price: 120, sizes: [41, 42, 43, 44, 45], img: ['https://i.ibb.co/20QQ3c2m/venum-contender-boxing-shoes-black-gold-1.png'] },
+      // { category: 'shoes', brand: "Nike", price: 210, sizes: [41, 42, 43, 44], img: ['https://i.ibb.co/3YB7bwDg/nike-machomai-boxing-shoes-white-black-1.png'] },
+      // { category: 'shoes', brand: "Nike", price: 210, sizes: [41, 42, 43, 44, 45], img: ['https://i.ibb.co/8D7Pn5SM/Nike-Machomai-2-Boxing-Boots-Black-White.png'] },
+      // { category: 'shoes', brand: "Everlast", price: 90, sizes: [41, 42, 43, 44], img: ['https://i.ibb.co/7d7N7pQV/everlast-ultimate-boxing-shoes-black-1.png'] },
+      // { category: 'shoes', brand: "Everlast", price: 120, sizes: [ 42, 43, 44, 45], img: ['https://i.ibb.co/DPkJg1mC/411j0-RNn-Ou-L-AC.png'] },
+      // { category: 'shoes', brand: "Adidas", price: 210, sizes: [ 42, 43, 44, 45], img: ['https://i.ibb.co/M5tp98rg/51-Udba-MFl-HL-AC-SY675.png'] },
+      // { category: 'shoes', brand: "Adidas", price: 210, sizes: [41, 42, 43, 44,], img: ['https://i.ibb.co/hJf7wtC0/54868081-17-D1-4-A09-97-AF-D0310-A7-AFD0-D-06492.png'] },
+      // // // ------------
       // // Wraps
       //  { category: 'wraps', brand: "Venum", price: 12, img: ['https://i.ibb.co/WpKNBwZ0/v-Wraps-Red.png'] },
       //  { category: 'wraps', brand: "Venum", price: 12, img: ['https://i.ibb.co/fz3QHtZX/eu-venum-0429-blue-venum-kontact-boxing-handwraps-4-m-blue-1.png'] },
@@ -76,7 +70,6 @@ const createBoxingGear = async () => {
     console.log('Malakia kati pige strava',err)
   }
 }
-createBoxingGear();
 
 const updateGear = async (brand, oldPrice, newPrice) => {
   try {
@@ -92,8 +85,6 @@ const updateGear = async (brand, oldPrice, newPrice) => {
 };
 // updateGear('Hayabusa', 0, 250);
 
-const checkShoes = await boxingGloveModel.find({ category: "shoes" });
-console.log(checkShoes);
 
 //------------ Start the Server -------------
 const startServer = async () => {

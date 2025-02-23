@@ -28,6 +28,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    const gear = await boxingGearModel.findById(req.params.id);
+    if (!gear) {
+      return res.status(404).json({ message: 'Gear not found' });
+    }
+    res.json(gear);
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching gear', error });
+  }
+});
 
 router.put('/', async (req, res) => {
   const { _id } = req.body; // The glove's ID

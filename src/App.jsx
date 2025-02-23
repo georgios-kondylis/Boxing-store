@@ -3,6 +3,7 @@ import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useState } from "react";
 import Home from "./components/Home";
+import ProductDetails from "./components/ProductDetails";
 
 function App() {
   const [boxingGear, setBoxingGear] = useState([]);
@@ -114,6 +115,18 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home 
+                 boxingGear={boxingGear} setBoxingGear={setBoxingGear}
+                 fetchCartData={fetchCartData} 
+                 setCartIsOpen={setCartIsOpen} 
+                 setFavsIsOpen={setFavsIsOpen}
+                 cartIsOpen={cartIsOpen}
+                 likedItems={likedItems} setLikedItems={setLikedItems}
+                 fetchLiked={fetchLiked}
+                 handleLike={handleLike}
+                 justAddedItem={justAddedItem} setJustAddedItem={setJustAddedItem}
+                 handleAddToCart={handleAddToCart} />
+              }/>
+          <Route path="/product/:id" element={<ProductDetails 
                  boxingGear={boxingGear} setBoxingGear={setBoxingGear}
                  fetchCartData={fetchCartData} 
                  setCartIsOpen={setCartIsOpen} 
