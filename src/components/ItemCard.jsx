@@ -23,7 +23,8 @@ const ItemCard = ({
     >
       <div className="flex justify-between items-center">
         <h3 className="text-[1.5rem] font-bold">{item.brand}</h3>
-        <div className="text-[1.5rem] cursor-pointer" onClick={() => handleLike(item)}>
+        <div className="text-[1.5rem] cursor-pointer" 
+             onClick={(event) => {event.stopPropagation(); handleLike(item); }}>
           {item.liked ? (
             <i className="text-redEasy fa-solid fa-heart"></i>
           ) : (
