@@ -109,24 +109,11 @@ function App() {
                 cartItems={cartItems} 
                 setCartItems={setCartItems}
                 likedItems={likedItems}
-                boxingGear={boxingGear} setBoxingGear={setBoxingGear}
                 handleLike={handleLike}
           />
 
         <Routes>
           <Route path="/" element={<Home 
-                 boxingGear={boxingGear} setBoxingGear={setBoxingGear}
-                 fetchCartData={fetchCartData} 
-                 setCartIsOpen={setCartIsOpen} 
-                 setFavsIsOpen={setFavsIsOpen}
-                 cartIsOpen={cartIsOpen}
-                 likedItems={likedItems} setLikedItems={setLikedItems}
-                 fetchLiked={fetchLiked}
-                 handleLike={handleLike}
-                 justAddedItem={justAddedItem} setJustAddedItem={setJustAddedItem}
-                 handleAddToCart={handleAddToCart} />
-              }/>
-          <Route path="/home" element={<Home 
                  boxingGear={boxingGear} setBoxingGear={setBoxingGear}
                  fetchCartData={fetchCartData} 
                  setCartIsOpen={setCartIsOpen} 

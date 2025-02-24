@@ -10,15 +10,15 @@ const Navbar = ({
   cartItems, setCartItems, 
   fetchCartData, cartLength, 
   likedItems,
-  boxingGear, setBoxingGear,
   handleLike, handleAddToCart,
   justAddedItem, setJustAddedItem}) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get("category") || ""; // Get current category from URL to dispaly as the option label
   const totalAmount = cartItems.reduce((total, item) => total + item.price, 0);
   const [navHovereditems, setNavHoveredItems] = useState({});
+  const [homeHovered, setHomeHovered] = useState(false);
   const location = useLocation();
-  console.log(location)
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCartData();
@@ -48,39 +48,49 @@ const Navbar = ({
 
   return (
     <>
-      <div id='navbar-container' className='fixed z-50 text-white w-full bg-mainBg2 border-b flex justify-center'>
+      <div id='navbar-container' className={`fixed z-50 text-white w-full bg-boxBlack border-b flex justify-center`}>
 
         <div id='navbar' className={`${main_px_navbar} ${transition} max-w-[1540px] shadow-xl w-full items-center flex justify-between h-[70px]`}>
-          
-          {!location.pathname.startsWith('/product/') && (
-          <div id='Form_And_Hamburger'>
-            <FormControl sx={{ width: '160px', '& .MuiOutlinedInput-root': 
-                {'&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'white', } , },  // Change focus border color
-                '.MuiOutlinedInput-notchedOutline': {  borderColor: 'gray',}, // default border color
-                  '&:hover .MuiOutlinedInput-notchedOutline': {  borderColor: '#fff',}, //  border color on hover
-                  '& .MuiInputLabel-root': { color: 'white', bgcolor: '#606060', paddingRight: '5px'}, // anim label color
-                  '& .MuiInputLabel-root.Mui-focused': { color: 'white', }, // hover label color when focused 
-                  '& .MuiSvgIcon-root': { color: 'white'}, // Change arrow icon color
-                  }}>
-                <InputLabel id="Category">Category</InputLabel>
-                <Select labelId="category-select-label" id="category-select" value={category} label="Category"
-                  onChange={handleCategoryChange} // Updates search params
-                  MenuProps={{ PaperProps: {sx: {
-                        backgroundColor: '#333', // Dropdown background color
-                        color: 'white',}} // Text color inside dropdown
-                    }} sx={{  '& .MuiSelect-select': { color: '#fff',}}} // Color of selected item  
-                >
-                  <MenuItem value="gloves" >Gloves</MenuItem>
-                  <MenuItem value="wraps">Wraps</MenuItem>
-                  <MenuItem value="shoes">Shoes</MenuItem>
-                  <MenuItem value="headgear">Headgear</MenuItem>
-                  <MenuItem value="mouthpiece">Mouthpiece</MenuItem>
-                </Select>
-            </FormControl>
-          </div>
-          )}
+          <div className='flex relative items-center gap-[20px]'>
 
-          <div className='flex items-center'>
+            <div className={`text-[1.3rem] md:text-[1.5rem] hover:scale-[1.2] cursor-pointer ${transition}`}
+                 onClick={() =>{navigate('/'); setCartIsOpen(false); setFavsIsOpen(false); }}
+                 onMouseEnter={()=> setHomeHovered(true)}
+                 onMouseLeave={()=> setHomeHovered(false)}>
+             <i class="fa-solid fa-house"></i>
+            </div>
+
+            {!location.pathname.startsWith('/product/') && (
+            <div id='Form_And_Hamburger'>
+              <FormControl sx={{ width: '120px', '& .MuiOutlinedInput-root': 
+                  {'&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'white', } , },// Change focus border color
+                   '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'white', } , // Change hover border color
+                   '.MuiOutlinedInput-notchedOutline': {  borderColor: 'gray',}, // default border color
+                    '&:hover .MuiOutlinedInput-notchedOutline': {  borderColor: '#fff',}, //  border color on hover
+                    '& .MuiInputLabel-root': { color: 'white', bgcolor: 'boxBlack', paddingRight: '5px'}, // anim label color
+                    '& .MuiInputLabel-root.Mui-focused': { color: 'white', }, // hover label color when focused 
+                    '& .MuiSvgIcon-root': { color: 'white'}, // Change arrow icon color
+                    }}>
+                  <InputLabel id="Category">Category</InputLabel>
+                  <Select labelId="category-select-label" id="category-select" value={category} label="Category"
+                    onChange={handleCategoryChange} // Updates search params
+                    MenuProps={{ PaperProps: {sx: {
+                          backgroundColor: '#333', // Dropdown background color
+                          color: 'white',}} // Text color inside dropdown
+                      }} sx={{ '& .MuiSelect-select': {color: '#fff',}}} // Color of selected item  
+                  >
+                    <MenuItem value="gloves" >Gloves</MenuItem>
+                    <MenuItem value="wraps">Wraps</MenuItem>
+                    <MenuItem value="shoes">Shoes</MenuItem>
+                    <MenuItem value="headgear">Headgear</MenuItem>
+                    <MenuItem value="mouthpiece">Mouthpiece</MenuItem>
+                  </Select>
+              </FormControl>
+            </div>
+            )}
+           </div>
+
+          <div className='absolute left-[49%] items-center'>
             <img className='w-[70px]' src="/punchlab.png" alt="" />
           </div>
           
@@ -88,14 +98,14 @@ const Navbar = ({
           <div id='Cart-&-Heart' className='text-[1.4rem] pr-[10px] flex items-center gap-[20px]'>
                      {/* HEART-ICON */}
             <div className='relative cursor-pointer' onClick={() => setFavsIsOpen(true)}>
-               <i className="fa-solid fa-heart-circle-check"></i>
+               <i className={`text-[1.3rem] md:text-[1.5rem] hover:scale-[1.2] cursor-pointer ${transition} fa-solid fa-heart-circle-check`}></i>
                <div className={`absolute ${likedItems < 1 ? 'hidden' : ''} top-[-4px] right-[-10px] w-[15px] h-[15px] flex items-center justify-center rounded-full bg-[#dc3030]`}>
                 <p className='text-[13px]'>{likedItems.length}</p>
               </div>
             </div>
 
             <div className='relative cursor-pointer' onClick={() => setCartIsOpen(true)}>
-              <i className="text-[1.4rem] fa-solid fa-cart-shopping"></i>
+              <i className={`text-[1.3rem] md:text-[1.5rem] hover:scale-[1.2] cursor-pointer ${transition} fa-solid fa-cart-shopping`}></i>
               <div className={`absolute ${cartLength < 1 ? 'hidden' : ''} top-[-5px] right-[-10px] w-[15px] h-[15px] flex items-center justify-center rounded-full bg-[#dc3030]`}>
                 <p className='text-[13px]'>{cartLength}</p>
               </div>
