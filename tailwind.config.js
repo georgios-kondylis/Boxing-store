@@ -11,7 +11,8 @@ export default {
         mainBg2: '#606060',
         redEasy: '#eb5656e6',
         boxBlack: '#202020',
-        mainBeige: '#faebd7'
+        mainBeige: '#faebd7',
+        paperBg: '#fffbf0'
       },
       screens: {
         xs: {max: '470px'}

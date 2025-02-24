@@ -35,8 +35,7 @@ const ItemCard = ({
 
   return (
     <div
-      className={`bg-white border-black border px-[20px] py-[10px] flex flex-col justify-between gap-[10px] rounded-lg shadow-md hover:shadow-lg hover:scale-[1.02] ${transition}`}
-      onClick={ () => navigate(`/product/${item._id}`) }>
+      className={`bg-white border-black border px-[20px] py-[10px] flex flex-col justify-between gap-[10px] rounded-lg shadow-md hover:shadow-lg hover:scale-[1.02] ${transition}`}>
 
       <div className="flex justify-between items-center">
         <h3 className="text-[1.5rem] font-bold">{item.brand}</h3>
@@ -51,7 +50,9 @@ const ItemCard = ({
         </div>
       </div>
 
-      {item.img && <img src={item.img[0]} alt={item.brand} className="w-full h-auto" />}
+      {item.img &&
+      <img src={item.img[0]} alt={item.brand} className={`hover:scale-[1.1] cursor-pointer w-full h-auto ${transition}`}
+           onClick={ () => navigate(`/product/${item._id}`) }/>}
 
       <div className="flex items-end justify-between">
         <div>

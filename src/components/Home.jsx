@@ -51,7 +51,7 @@ const Home = ({
   };
 
   return (
-    <div className="w-full bg-mainBg flex justify-center ">
+    <div className="w-full h-screen bg-[url(/boxingGym2.jpg)] bg-cover bg-center flex justify-center ">
       <div className={`min-h-screen flex flex-col w-full max-w-[1540px] overflow-x-hidden ${transition} ${main_px}`}
            onClick={() => {setCartIsOpen(false); setFavsIsOpen(false)}}>
 
