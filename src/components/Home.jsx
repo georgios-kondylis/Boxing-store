@@ -94,7 +94,7 @@ const Home = ({
 
             <div className="flex flex-wrap md:flex-nowrap w-full justify-around gap-[20px]">
               <div className="relative cursor-pointer min-w-[200px] w-[230px] hover:scale-110 transition-all duration-300 ease-in-out"
-                   onClick={() => setSearchParams('category=gloves')}
+                   onClick={() => {setSearchParams('category=gloves'); setCartIsOpen(false); setFavsIsOpen(false)}}
                    onMouseEnter={() => setCategoryGloveHovered(true)}
                    onMouseLeave={() => setCategoryGloveHovered(false)}>
                     
@@ -106,7 +106,7 @@ const Home = ({
                 </div>}
               </div>
               <div className="relative cursor-pointer min-w-[200px] w-[300px] hover:scale-110 transition-all duration-300 ease-in-out"
-                  onClick={() => setSearchParams('category=shoes')}
+                  onClick={() => {setSearchParams('category=shoes'); setCartIsOpen(false); setFavsIsOpen(false)}}
                   onMouseEnter={() => setCategoryShoeHovered(true)}
                   onMouseLeave={() => setCategoryShoeHovered(false)}>
                     
@@ -118,7 +118,7 @@ const Home = ({
                 </div>}
               </div>
               <div className="relative cursor-pointer min-w-[200px] w-[250px] hover:scale-110 transition-all duration-300 ease-in-out"
-                  onClick={() => setSearchParams('category=headgear')}
+                  onClick={() => {setSearchParams('category=headgear'); setCartIsOpen(false); setFavsIsOpen(false)}}
                   onMouseEnter={() => setCategoryHeadgearHovered(true)}
                   onMouseLeave={() => setCategoryHeadgearHovered(false)}>
                     

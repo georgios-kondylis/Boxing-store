@@ -48,7 +48,7 @@ const ProductDetails = ({
   }, [id]);
 
   return (
-    <div className="relative flex justify-center border bg-[url(/bgym.jpg)] bg-cover bg-center">
+    <div className="relative flex justify-center bg-[url(/bgym.jpg)] bg-cover bg-center">
   
       <div 
         className={`flex flex-col w-full md:flex-row justify-start items-center md:items-start gap-[20px] max-w-[1540px] text-white min-h-screen md:gap-[40px] pt-[100px]

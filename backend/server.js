@@ -71,19 +71,23 @@ const createBoxingGear = async () => {
   }
 }
 
-const updateGear = async (brand, oldPrice, newPrice) => {
+const updateGear = async (category, description) => {
   try {
-    const updatedGear = await boxingGearModel.findOneAndUpdate(
-      { brand: brand, price: oldPrice },  // Find gear with the brand and old price (0)
-      { price: newPrice },                // Update price to the new price (250)
-      { new: true }                       // Return the updated document
+    const updatedGear = await boxingGearModel.updateMany(
+      { category: category }, // Find all documents matching the category
+      { $set: { description: description } }, // Use $set to update the description field
+      { new: true } // This option is for findOneAndUpdate, not needed in updateMany
     );
     console.log('Updated Gear:', updatedGear);
   } catch (error) {
     console.error("Error updating gear:", error);
   }
 };
-// updateGear('Hayabusa', 0, 250);
+
+// Call the function to update all gloves' descriptions
+// updateGear('wraps', 
+// "Support, stability, and protection our hand wraps provide a secure fit, reducing impact and keeping your hands and wrists safe during every punch."
+// );
 
 
 //------------ Start the Server -------------
