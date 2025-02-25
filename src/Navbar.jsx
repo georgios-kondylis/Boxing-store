@@ -57,7 +57,7 @@ const Navbar = ({
                  onClick={() =>{navigate('/'); setCartIsOpen(false); setFavsIsOpen(false); }}
                  onMouseEnter={()=> setHomeHovered(true)}
                  onMouseLeave={()=> setHomeHovered(false)}>
-             <i class="fa-solid fa-house"></i>
+             <i className="fa-solid fa-house"></i>
             </div>
 
             {!location.pathname.startsWith('/product/') && (
@@ -66,7 +66,7 @@ const Navbar = ({
                   {'&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'white', } , },// Change focus border color
                    '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'white', } , // Change hover border color
                    '.MuiOutlinedInput-notchedOutline': {  borderColor: 'gray',}, // default border color
-                    '&:hover .MuiOutlinedInput-notchedOutline': {  borderColor: '#fff',}, //  border color on hover
+                    '&:hover .MuiOutlinedInput-notchedOutline': {  borderColor: '#fffff',}, //  border color on hover
                     '& .MuiInputLabel-root': { color: 'white', bgcolor: 'boxBlack', paddingRight: '5px'}, // anim label color
                     '& .MuiInputLabel-root.Mui-focused': { color: 'white', }, // hover label color when focused 
                     '& .MuiSvgIcon-root': { color: 'white'}, // Change arrow icon color
@@ -74,10 +74,19 @@ const Navbar = ({
                   <InputLabel id="Category">Category</InputLabel>
                   <Select labelId="category-select-label" id="category-select" value={category} label="Category"
                     onChange={handleCategoryChange} // Updates search params
-                    MenuProps={{ PaperProps: {sx: {
-                          backgroundColor: '#333', // Dropdown background color
-                          color: 'white',}} // Text color inside dropdown
-                      }} sx={{ '& .MuiSelect-select': {color: '#fff',}}} // Color of selected item  
+                    MenuProps={{  PaperProps: {
+                      sx: {
+                        backgroundColor: '#333', // Dropdown background color
+                        color: 'white', // Text color inside dropdown
+                        '& .MuiMenuItem-root': { 
+                          '&:hover': { backgroundColor: '#fffbf0', color: 'black' }, // Hover background color → Red
+                          '&.Mui-selected': { backgroundColor: '#121212' }, // Selected background color → Orange
+                          '&.Mui-selected:hover': { backgroundColor: '#fff' } // Darker orange on hover if selected
+                        }
+                      }
+                    }
+                  }} 
+                  sx={{ '& .MuiSelect-select': { color: '#fff' } }} // Color of selected item
                   >
                     <MenuItem value="gloves" >Gloves</MenuItem>
                     <MenuItem value="wraps">Wraps</MenuItem>
@@ -113,7 +122,7 @@ const Navbar = ({
           </div>
 
           {/* Favs-Section */}
-          <div className={`z-50 fixed ${favsIsOpen? 'right-0' : 'right-[-900px]'} top-0 h-full w-[250px] md:w-[300px] bg-mainBg p-[20px] shadow-lg ${transition}`}>
+          <div className={`z-50 fixed ${favsIsOpen? 'right-0' : 'right-[-900px]'} top-0 h-full w-[250px] md:w-[300px] bg-boxBlack p-[20px] shadow-lg ${transition}`}>
             <div>
               <button className='text-[1.5rem] ml-[20px]' onClick={() => setFavsIsOpen(false)}>
                   <i className="fa-solid fa-right-from-bracket"></i>
@@ -146,7 +155,7 @@ const Navbar = ({
           </div>
 
           {/* Side Cart Panel */}
-          <div id='sidenav' className={`z-50 fixed bg-[#2e2e2e] top-0 overflow-y-auto h-full w-[50%] md:w-[45%] max-w-[400px] ${cartIsOpen ? 'right-0' : 'right-[-500px]'} ${transition}`}>
+          <div id='sidenav' className={`z-50 fixed bg-boxBlack top-0 overflow-y-auto h-full w-[50%] md:w-[45%] max-w-[400px] ${cartIsOpen ? 'right-0' : 'right-[-500px]'} ${transition}`}>
             <div className='border-b w-full h-[70px] flex justify-start items-center'>
               <button className='text-[1.5rem] ml-[20px]' onClick={() => setCartIsOpen(false)}>
                 <i className="fa-solid fa-right-from-bracket"></i>

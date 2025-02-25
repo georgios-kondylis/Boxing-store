@@ -10,6 +10,10 @@ html, body {
   padding: 0; /* Optional: Removes default padding */
 }
 
+h4 {
+  color: white;
+  text-shadow: 0 0 5px black, 0 0 15px black;
+}
 /* h1 {
   background-color: #faebd7;
 } */
