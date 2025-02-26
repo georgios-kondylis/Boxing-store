@@ -64,9 +64,8 @@ const Navbar = ({
             <div id='Form_And_Hamburger'>
               <FormControl sx={{ width: '120px', '& .MuiOutlinedInput-root': 
                   {'&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: 'white', } , },// Change focus border color
-                   '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'white', } , // Change hover border color
+                   '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: '#fff', } , // Change hover border color
                    '.MuiOutlinedInput-notchedOutline': {  borderColor: 'gray',}, // default border color
-                    '&:hover .MuiOutlinedInput-notchedOutline': {  borderColor: '#fffff',}, //  border color on hover
                     '& .MuiInputLabel-root': { color: 'white', bgcolor: 'boxBlack', paddingRight: '5px'}, // anim label color
                     '& .MuiInputLabel-root.Mui-focused': { color: 'white', }, // hover label color when focused 
                     '& .MuiSvgIcon-root': { color: 'white'}, // Change arrow icon color
