@@ -8,7 +8,6 @@ import { Cart } from "./Cart.js";
 import cartRoutes from "./routes/cartRoutes.js"; 
 import boxingGearRoutes from "./routes/BoxingGearRoutes.js"; 
 
-
 const PORT = process.env.PORT || 5000;
 
 const app = express();
@@ -83,11 +82,6 @@ const updateGear = async (category, description) => {
     console.error("Error updating gear:", error);
   }
 };
-
-// Call the function to update all gloves' descriptions
-// updateGear('wraps', 
-// "Support, stability, and protection our hand wraps provide a secure fit, reducing impact and keeping your hands and wrists safe during every punch."
-// );
 
 
 //------------ Start the Server -------------
