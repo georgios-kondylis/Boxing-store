@@ -26,7 +26,7 @@ const Navbar = ({
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5000/add-to-cart/${id}`, { method: 'DELETE' });
+      await fetch(`https://backend-boxingstore.onrender.com/add-to-cart/${id}`, { method: 'DELETE' });
       fetchCartData(); // Fetch updated cart after deleting an item
     } catch (err) {
       console.error('Error deleting item:', err);

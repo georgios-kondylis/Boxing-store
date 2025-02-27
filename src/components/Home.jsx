@@ -29,7 +29,7 @@ const Home = ({
   useEffect(() => {
     const fetchGear = async () => {
       try {
-        const response = await fetch("http://localhost:5000/allBoxingGear");
+        const response = await fetch("https://backend-boxingstore.onrender.com/allBoxingGear");
         const data = await response.json();
         const filteredGear = data.filter((item) => item.category === paramsCategory);
         const liked = data.filter((item) => item.liked === true);

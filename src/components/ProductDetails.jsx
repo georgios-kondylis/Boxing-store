@@ -35,7 +35,7 @@ const ProductDetails = ({
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/allBoxingGear/${id}`);
+        const response = await fetch(`https://backend-boxingstore.onrender.com/allBoxingGear/${id}`);
         const formatJson = await response.json();
         setProduct(formatJson);
       } catch (err) {

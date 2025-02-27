@@ -17,7 +17,7 @@ function App() {
     // Fetch Cart Data
     const fetchCartData = async () => {
       try {
-        const res = await fetch('http://localhost:5000/add-to-cart');
+        const res = await fetch('https://backend-boxingstore.onrender.com/add-to-cart');
         const cardDataInJson = await res.json();
         setCartItems(cardDataInJson);
         setCartLength(cardDataInJson.length);
@@ -29,7 +29,7 @@ function App() {
 
     const fetchLiked = async () => {
       try {
-        const response = await fetch("http://localhost:5000/allBoxingGear");
+        const response = await fetch("https://backend-boxingstore.onrender.com/allBoxingGear");
         const data = await response.json();
         const liked = data.filter((item) => item.liked === true);
         setLikedItems(liked);
@@ -52,7 +52,7 @@ function App() {
         fetchLiked();
     
         // Now make the PUT request to update the backend
-        const response = await fetch("http://localhost:5000/allBoxingGear", {
+        const response = await fetch("https://backend-boxingstore.onrender.com/allBoxingGear", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ _id: item._id }),  // Send the item ID to toggle the liked status
@@ -69,7 +69,7 @@ function App() {
 
     const handleAddToCart = async (item) => {
       try {
-        const response = await fetch("http://localhost:5000/add-to-cart", {
+        const response = await fetch("https://backend-boxingstore.onrender.com/add-to-cart", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -144,3 +144,8 @@ function App() {
 export default App;
 
 //  https://g-kondylis.imgbb.com/   Is the image cloud im using for the mongoDB pictures
+// https://backend-boxingstore.onrender.com the Base url i got from render to make the api calls 
+// ex.   const fetchCartData = async () => {
+      // try {
+      //   const res = await fetch('https://backend-boxingstore.onrender.com/add-to-cart');
+      // // isntead of const res = await fetch('https://localhost:5000/add-to-cart');
